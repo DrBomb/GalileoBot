@@ -15,14 +15,15 @@ class Led:
     self.__state = self.__gpio.LOW
     self.pin = pin
     self.name = name
-    self.__gpio.digitalWrite(pin,self.__state)
+    self.__gpio.pinMode(self.pin,self.__gpio.OUTPUT)
+    self.__gpio.digitalWrite(self.pin,self.__state)
   def setState(self,state):
     if(state != 0 or state != 1):
       raise ValueError
     self.__state = self.__gpio.HIGH if state == 1 else self.__gpio.LOW
     self.__gpio.digitalWrite(self.pin,self.__state)
   def getState(self):
-    return self.__state
+    return 1 if self.__state == self.__gpio.HIGH else 0
   def toggleState(self):
     self.__state = self.__gpio.HIGH if self.__state ==self.__gpio.LOW else self.__gpio.LOW
     self.__gpio.digitalWrite(self.pin,self.__state)
@@ -34,6 +35,9 @@ class wiringx86_dummy:
   OUTPUT = 0
   __pins = dict()
   __states = dict()
+  def __init__(self,debug):
+    self.__debug = debug
+    pass
   def pinMode(self,pin,mode):
     self.__checkEntry(pin)
     self.__pins[pin] = mode
