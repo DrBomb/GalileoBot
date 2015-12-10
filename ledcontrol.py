@@ -3,6 +3,11 @@ class LedControl:
     self.leds = list()
     for x in pins:
       self.leds.append(Led(gpio,x['pin'],x['name']))
+  def getNames(self):
+    ret = list()
+    for x in self.leds:
+      ret.append(x.name)
+    return ret
 
 class Led:
   def __init__(self,gpio,pin,name):
